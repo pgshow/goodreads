@@ -49,7 +49,7 @@ func Fetch(url string) (body string, err error) {
 
 					return &RetriableError{
 						Err:        err,
-						RetryAfter: time.Duration(5) * time.Second,
+						RetryAfter: time.Duration(10) * time.Second,
 					}
 				}
 			}
@@ -58,7 +58,10 @@ func Fetch(url string) (body string, err error) {
 		},
 
 		// 设置重试次数
-		retry.Attempts(3),
+		retry.Attempts(10),
+
+		// 重试延迟
+		retry.Delay(10),
 
 		// 重试策略
 		retry.DelayType(func(n uint, err error, config *retry.Config) time.Duration {

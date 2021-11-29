@@ -5,7 +5,7 @@ type Book struct {
 	Author          string
 	Published_Year  string
 	Genre           string
-	Average_Ratings string
-	Number_Ratings  string
+	Average_Ratings float64
+	Number_Ratings  int
 	Image_URL       string
 }

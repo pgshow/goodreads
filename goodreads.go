@@ -64,8 +64,8 @@ func main() {
 			// 图片
 			imgTmp := htmlquery.FindOne(book, ".//img")
 			if imgTmp != nil {
-				thumbnail := htmlquery.SelectAttr(imgTmp, "src")                 // 略缩图
-				bookOjb.Image_URL = strings.Replace(thumbnail, "._SX50_SY75_", "", 1) // 原图
+				thumbnail := htmlquery.SelectAttr(imgTmp, "src")                         // 略缩图
+				bookOjb.Image_URL = strings.Replace(thumbnail, "._SX50_SY75_", "", 1)    // 原图
 				bookOjb.Image_URL = strings.Replace(bookOjb.Image_URL, "._SY75_", "", 1) // 原图
 				bookOjb.Image_URL = strings.Replace(bookOjb.Image_URL, "._SX50_", "", 1) // 原图
 			}
@@ -96,15 +96,20 @@ func main() {
 					regexpRule := regexp.MustCompile(`avg rating ([\d\.]+)[ —]+([\d,]+) ratings[ —]+published (\d{0,4})`)
 					matchTmp := regexpRule.FindStringSubmatch(textTmp)
 
-					bookOjb.Average_Ratings = matchTmp[1]
-					bookOjb.Number_Ratings = matchTmp[2]
+					if tmp, err := strconv.ParseFloat(matchTmp[1], 64); err == nil {
+						bookOjb.Average_Ratings = tmp
+					}
+
+					if tmp, err := strconv.Atoi(strings.ReplaceAll(matchTmp[2], ",", "")); err == nil {
+						bookOjb.Number_Ratings = tmp
+					}
+
 					bookOjb.Published_Year = matchTmp[3]
 				}
 			}
 
 			// 抛弃低评分的书籍
-			rating64, err := strconv.ParseFloat(bookOjb.Average_Ratings, 64)
-			if err != nil || rating64 <= conf.Rating {
+			if err != nil || bookOjb.Average_Ratings <= conf.Rating {
 				fmt.Println(k, bookOjb.Title, "- rating is below", conf.Rating)
 				continue
 			}

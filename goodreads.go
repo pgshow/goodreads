@@ -83,7 +83,7 @@ func main() {
 				bookOjb.Genre = htmlquery.InnerText(genreTmp)
 			}
 
-			//if bookOjb.Title == "Autobiography of a Yogi (Paperback)" {
+			//if strings.Contains(bookOjb.Title, "Work Smarter: 500+ Online Resources Today") {
 			//	println(111)
 			//}
 
@@ -94,7 +94,8 @@ func main() {
 				textTmp = strings.Replace(textTmp, "\n", "", -1)
 
 				if textTmp != "" {
-					regexpRule := regexp.MustCompile(`avg rating ([\d\.]+)[ —]+([\d,]+) ratings[ —]+published (\d{0,4})`)
+					// 注意 rating 有的单数，有的复数
+					regexpRule := regexp.MustCompile(`avg rating ([\d\.]+)[ —]+([\d,]+) ratings?[ —]+published (\d{0,4})`)
 					matchTmp := regexpRule.FindStringSubmatch(textTmp)
 
 					if tmp, err := strconv.ParseFloat(matchTmp[1], 64); err == nil {

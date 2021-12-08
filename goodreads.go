@@ -19,7 +19,7 @@ func main() {
 	var bookList []model.Book
 	var i = 0
 	for true {
-		time.Sleep(2 * time.Second)
+		time.Sleep(15 * time.Second)
 		i += 1
 		url := fmt.Sprintf("https://www.goodreads.com/shelf/show/%s?page=%d", conf.Genre, i)
 		println("scrape: " + url)

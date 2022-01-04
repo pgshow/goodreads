@@ -21,6 +21,7 @@ func main() {
 	for true {
 		time.Sleep(20 * time.Second)
 		i += 1
+
 		url := fmt.Sprintf("https://www.goodreads.com/shelf/show/%s?page=%d", conf.Genre, i)
 		println("scrape: " + url)
 
@@ -44,7 +45,12 @@ func main() {
 		bookItems := htmlquery.Find(doc, "//div[@class='leftContainer']/div[@class='elementList']")
 
 		if bookItems == nil {
-			return
+			if strings.Contains(body, "Showing") {
+				println("The page may over, stop scraping")
+				break
+			} else {
+				return
+			}
 		}
 
 		k := 0

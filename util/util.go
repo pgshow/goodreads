@@ -24,9 +24,9 @@ func Fetch(url string) (body string, err error) {
 	_ = retry.Do(
 		func() error {
 			resp, bodyTmp, errs := gorequest.New().Get(url).
-				Set("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.57").
-				Set("accept-language", "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6,zh-TW;q=0.5,ja;q=0.4").
-				Set("Cookie", "ccsid=483-6782365-5243135; __qca=P0-1854119153-1637916332186; logged_out_browsing_page_count=2; u=5CtA35AROoKyKzsUz3f-6lQwMSedZK88edsPhHxpBSIYoMST; p=xBoYCVkGNQIpFQzfLOeDzIw2re7839FAYaaSMAzuq7sdWtG0; likely_has_account=true; _session_id2=3298b33fe951996dd9d9b5da8adc2872; locale=en").
+				Set("user-agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:95.0) Gecko/20100101 Firefox/95.0").
+				Set("accept-language", "en-US,en;q=0.5").
+				Set("Cookie", "ccsid=651-9718854-2247275; __qca=P0-1757457643-1637915367666; __gads=ID=78739481e834c2ac-2212f59a58cf00fb:T=1638529674:S=ALNI_MYvFNydt4A5JUFw8vMLJmz1grBhMw; locale=en; _session_id2=f1a8fde7dff388586ee5b72a8797e4ae; blocking_sign_in_interstitial=true; u=6jlV6VcjB6ZJTb6rgkg-c4mWTLVi_Fq_5PZp1MPqXPQWHZe_; p=xBoYCVkGNQIpFQzfLOeDzIw2re7839FAYaaSMAzuq7sdWtG0; likely_has_account=true").
 				Timeout(45 * time.Second).
 				End()
 

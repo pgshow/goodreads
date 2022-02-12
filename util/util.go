@@ -20,13 +20,13 @@ func (e *RetriableError) Error() string {
 
 var _ error = (*RetriableError)(nil)
 
-func Fetch(url string) (body string, err error) {
+func Fetch(url string, userAgent string, cookies string) (body string, err error) {
 	_ = retry.Do(
 		func() error {
 			resp, bodyTmp, errs := gorequest.New().Get(url).
-				Set("user-agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:95.0) Gecko/20100101 Firefox/95.0").
+				Set("user-agent", userAgent).
 				Set("accept-language", "en-US,en;q=0.5").
-				Set("Cookie", "ccsid=651-9718854-2247275; __qca=P0-1757457643-1637915367666; __gads=ID=78739481e834c2ac-2212f59a58cf00fb:T=1638529674:S=ALNI_MYvFNydt4A5JUFw8vMLJmz1grBhMw; locale=en; _session_id2=f1a8fde7dff388586ee5b72a8797e4ae; blocking_sign_in_interstitial=true; u=6jlV6VcjB6ZJTb6rgkg-c4mWTLVi_Fq_5PZp1MPqXPQWHZe_; p=xBoYCVkGNQIpFQzfLOeDzIw2re7839FAYaaSMAzuq7sdWtG0; likely_has_account=true").
+				Set("Cookie", cookies).
 				Timeout(45 * time.Second).
 				End()
 

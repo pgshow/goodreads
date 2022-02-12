@@ -25,7 +25,7 @@ func main() {
 		url := fmt.Sprintf("https://www.goodreads.com/shelf/show/%s?page=%d", conf.Genre, i)
 		println("scrape: " + url)
 
-		body, _ := util.Fetch(url)
+		body, _ := util.Fetch(url, conf.UserAgent, conf.Cookies)
 
 		if strings.Contains(body, "Back to the Goodreads homepage") {
 			println("The page is over, stop scraping")
